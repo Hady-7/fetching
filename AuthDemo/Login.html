@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./Style/bootstrap.min.css">
+    <link rel="stylesheet" href="./Style/Style.css">
+</head>
+<body>
+    <div id="background">
+        <div id="Login_Container">
+            <h4>Login</h4>
+            <form onsubmit="LoginForm(event)">
+                <div class="form-group row">
+                    <label for="Email" class="col-sm-4 col-form-label">Email</label>
+                    <div class="col-sm-8">
+                      <input type="email" class="form-control" id="Email" name="Email" placeholder="email@example.com">
+                      <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <br>
+                <div class="form-group row">
+                    <label for="Password" class="col-sm-4 col-form-label">Password</label>
+                    <div class="col-sm-8">
+                      <input type="password" class="form-control" id="Password" name="Password" placeholder="**********">
+                      <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <br>
+                <button type="submit" id="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+    <script src="./Script/Login.js" type="module"></script>
+</body>
+</html>

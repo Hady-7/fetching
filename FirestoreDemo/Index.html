@@ -1,0 +1,204 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Grocery</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Grocery</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">Home</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+    <br>
+    <div class="container-fluid" style="width: 60%;">
+        <div class="form-group row">
+            <label for="ID" class="col-sm-2 col-form-label">ID</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="ID" placeholder="ID" readonly>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="Name" class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="Name" placeholder="Name">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="Price" class="col-sm-2 col-form-label">Price</label>
+            <div class="col-sm-10">
+              <input type="number" class="form-control" id="Price" placeholder="Price">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="Category" class="col-sm-2 col-form-label">Category</label>
+            <div class="col-sm-10">
+                <select class="form-select form-control" id="Category">
+                    <option>Dairy</option>
+                    <option>Juice</option>
+                    <option>Bread</option>
+                    <option>Cleaning</option>
+                    <option>Chocolate</option>
+                </select>
+            </div>
+        </div>
+        <button type="button" class="btn btn-success" onclick="SaveProduct()">Save Product</button>
+        <hr>
+        <table id="ProductsData" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js";
+        import { getFirestore, addDoc, collection, getDocs, onSnapshot, getDoc, doc, updateDoc, deleteDoc, query, where,orderBy } from "https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js";
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyDq2Xxsu2wEi6LaIXy4c5lcKOEPK6ZkvBg",
+          authDomain: "sohagfrontend.firebaseapp.com",
+          databaseURL: "https://sohagfrontend-default-rtdb.firebaseio.com",
+          projectId: "sohagfrontend",
+          storageBucket: "sohagfrontend.appspot.com",
+          messagingSenderId: "528100423945",
+          appId: "1:528100423945:web:93f786c81b6c2325c27bd8"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const firestore = getFirestore(app);
+
+        //get data one time 
+        // getDocs(collection(firestore,'Products')).then((snapshot)=>{
+        //     snapshot.forEach((doc)=>{
+        //         console.log(`${doc.id} => ${doc.data().Name}`);
+        //     })
+        // });
+
+        //listen on any changes
+        onSnapshot(collection(firestore,'Products'), (snapshot)=>{
+            $("#ProductsData>tbody").empty();
+            snapshot.forEach((doc)=>{
+                //console.log(`${doc.id} => ${doc.data().Name}`);
+                ShowProduct(doc);
+            })
+        });
+
+        function ShowProduct(product){
+            var productData = product.data();
+            var row = `<tr>
+                    <td>${product.id}</td>
+                    <td>${productData.Name}</td>
+                    <td>${productData.Category}</td>
+                    <td>${productData.Price}</td>
+                    <td>
+                        <button type="button" class="btn btn-warning" onclick="fillProduct('${product.id}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                            </svg>
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="deleteProduct('${product.id}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-octagon" viewBox="0 0 16 16">
+                                <path d="M4.54.146A.5.5 0 0 1 4.893 0h6.214a.5.5 0 0 1 .353.146l4.394 4.394a.5.5 0 0 1 .146.353v6.214a.5.5 0 0 1-.146.353l-4.394 4.394a.5.5 0 0 1-.353.146H4.893a.5.5 0 0 1-.353-.146L.146 11.46A.5.5 0 0 1 0 11.107V4.893a.5.5 0 0 1 .146-.353L4.54.146zM5.1 1 1 5.1v5.8L5.1 15h5.8l4.1-4.1V5.1L10.9 1H5.1z"/>
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </button>
+                    </td>
+                </tr>`;
+            $("#ProductsData>tbody").append(row);
+        }
+
+        window.SaveProduct = SaveProduct;
+        async function SaveProduct(){
+            var ID = $("#ID").val();
+            var Name = $("#Name").val();
+            var Price = parseInt($("#Price").val());
+            var Category = $("#Category").val();
+
+            var data = {
+                Name:Name,
+                Price:Price,
+                Category:Category
+            }
+            console.log(data);
+            
+            if(ID == ""){ //insert
+                const product = await addDoc(collection(firestore,'Products'),data);
+                console.log(product.id);
+            }else{ //update
+                updateDoc(doc(firestore,'Products',ID),data);
+            }
+
+            Clear();
+        }
+
+        window.fillProduct = fillProduct;
+        async function fillProduct(PId){
+            //get one doc
+            const ProductSnapShot = await getDoc(doc(firestore,'Products',PId));
+            var product = ProductSnapShot.data();
+            $("#ID").val(PId);
+            $("#Name").val(product.Name);
+            $("#Category").val(product.Category);
+            $("#Price").val(product.Price);
+        }
+
+        window.deleteProduct = deleteProduct;
+        function deleteProduct(PId){
+            deleteDoc(doc(firestore,'Products',PId));
+        }
+
+        function Clear(){
+            $("#ID").val("");
+            $("#Name").val("");
+            $("#Category").val("Dairy");
+            $("#Price").val(0);
+        }
+    
+        window.TestQuery = TestQuery;
+        async function TestQuery(){
+            //var q = query(collection(firestore,'Products'), where('Category','==','Dairy'));
+            //var q = query(collection(firestore,'Products'), where('Category','!=','Dairy'));
+            //var q = query(collection(firestore,'Products'), where('Price','>=',10)); //>
+            //var q = query(collection(firestore,'Products'), where('Price','<',10)); //<
+            //var q = query(collection(firestore,'Products'), where('Category','in', ['Dairy','Juice'])); 
+            //var q = query(collection(firestore,'Products'), where('Category','not-in', ['Dairy','Juice'])); 
+            // var q = query(collection(firestore,'Products'), 
+            //               where('Category','==', 'Cleaning'),
+            //               where('Price','>',5),
+            //               orderBy('Price'),
+            //               orderBy('Name')); 
+            var q = query(collection(firestore,'Products'),
+                          where('Category','in', ['Dairy','Juice','Cleaning']),
+                          orderBy('Name'))
+            var snapshot = await getDocs(q)
+            snapshot.forEach((doc)=>{
+                console.log(doc.data());
+            })
+        }
+    </script>
+</body>
+</html>

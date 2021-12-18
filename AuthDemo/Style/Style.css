@@ -1,0 +1,167 @@
+body{
+    height: 100%;
+    background-color: #F4F2F0;
+}
+#background{
+    background-image: url("../Resources/Registration_Background.jpg");
+    background-size: cover;
+    height: 100%;
+}
+
+#Registration_Container{
+    background: rgba(255,255,255,0.5);
+    border-radius: 15px;
+    width: 30%;
+    height: 70%;
+    position: absolute;
+    margin-left: 35%;
+    margin-top: 7%;
+    padding: 3%;
+}
+
+#Registration_Container>h4{
+    color:#80A4A0;
+    font-size: xx-large;
+    text-align: center;
+    margin-bottom: 10%;
+}
+
+button[type="submit"]{
+    width:97%;
+    background-color: #FCC655 !important;
+    border-color: #FCC655 !important;
+}
+
+button[type="submit"]:hover{
+    background-color: #80A4A0 !important;
+    border-color: #80A4A0 !important;
+}
+
+.navbar{
+    background-color: #80A4A0 !important;
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+}
+
+.WelcomeDiv{
+    background-image: url("../Resources/Registration_Background.jpg");
+    background-size: cover;
+    height: 100%;
+    background-attachment: fixed;
+    padding-top: 20%;
+    text-align: center;
+    color: #FCC655;
+    font-size: 40px;
+    font-family: revert;
+    border-bottom: 1px solid #B7C5C1;
+}
+
+.WelcomeDiv>div{
+    font-size: 20px;
+}
+
+.row{
+    width:100%;
+}
+
+.form-group > .col-sm-8{
+    padding: 0px;
+}
+
+/*scroll bar*/
+html {
+    --scrollbarBG: #CFD8DC;
+    --thumbBG: #7FA4A1;
+}
+
+body::-webkit-scrollbar {
+    width: 11px;
+}
+
+body {
+    scrollbar-width: thin;
+    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+
+body::-webkit-scrollbar-track {
+    background: var(--scrollbarBG);
+}
+  
+body::-webkit-scrollbar-thumb {
+    background-color: var(--thumbBG) ;
+    border-radius: 6px;
+    border: 3px solid var(--scrollbarBG);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Scroll bar End */
+
+#Products>h1{
+    text-align: center;
+    color: #7FA4A1;
+}
+
+.card{
+    padding-right: 0px;
+    padding-left: 0px;
+    text-align: center;
+    margin: 1%;
+}
+
+.card-header{
+    height: 200px;
+}
+
+.Footer{
+    background: #B7C5C1;
+    padding: 2%;
+    margin: 0px;
+    color: aliceblue;
+}
+
+.Footer+h5{
+    text-align: center;
+    padding: 1%;
+    background: #7FA4A1;
+    color: aliceblue;
+}
+
+.Footer>.col-md-6>h4{
+    color: #7FA4A1;
+}
+
+.Footer>.col-md-2>h4{
+    color: #7FA4A1;
+}
+
+.Cart>h1{
+    text-align: center;
+    color:#7FA4A1;
+}
+
+#Login_Container{
+    background: rgba(255,255,255,0.5);
+    border-radius: 15px;
+    width: 30%;
+    height: 50%;
+    position: absolute;
+    margin-left: 35%;
+    margin-top: 11%;
+    padding: 3%;
+}
+
+#Login_Container>h4{
+    color:#80A4A0;
+    font-size: xx-large;
+    text-align: center;
+    margin-bottom: 10%;
+}
+
+/* #FEC354 yellow*/
+/* #7FA4A1 dark gray */
+/* #B7C5C1 lighter gray */
+/* #F4F2F0 lightest gray */

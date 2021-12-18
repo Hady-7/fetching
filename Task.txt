@@ -1,0 +1,11 @@
+-create firebase cloud firestore db.
+-work on course collection.
+-each course has name, final mark, hours, avalilable or not.
+-implement the full CRUD operation.
+-implement Filtering page.
+field - operation - value
+-validate data with firestore rules as:
+	*name should has value
+	*hours should be at least 6
+	*available is boolen value
+	*final mark should be positive number 
